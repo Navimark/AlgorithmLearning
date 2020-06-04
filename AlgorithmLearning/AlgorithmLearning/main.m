@@ -12,10 +12,19 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         CSTListNode *linkList = linkListWithRange(NSMakeRange(1, 10));
-        printLinkList(linkList);
-        reverseLinkList(linkList);
-        NSLog(@"反装之后");
-        printLinkList(linkList);
+        printLinkList(linkList,NO);
+//        reverseLinkList(linkList);
+//        NSLog(@"反装之后");
+//        printLinkList(linkList,YES);
+        
+        reverseLinkListBetween(linkList, 3, 5);//pass
+//        reverseLinkListBetween(linkList, 1, 5);//pass
+//        reverseLinkListBetween(linkList, 3, 11);//pass
+//        reverseLinkListBetween(linkList, 3, 10);//pass
+//        reverseLinkListBetween(linkList, 1, 10);//pass
+//        reverseLinkListBetween(linkList, 1, 11);//pass
+//        reverseLinkListBetween(linkList, 0, 11);//pass
+//
         
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
     }

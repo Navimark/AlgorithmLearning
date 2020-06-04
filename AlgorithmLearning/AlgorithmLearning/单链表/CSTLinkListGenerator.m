@@ -27,14 +27,25 @@ CSTListNode *linkListWithRange(NSRange range)
     return headNode;
 }
 
-void printLinkList(CSTListNode *linkList)
+void printLinkList(CSTListNode *linkList, BOOL pretty)
 {
+    if (!linkList) {
+        printf("NULL <-> NULL ???\n");
+        return;
+    }
     printf("linkList(%p)的长度:%ld \n",linkList, linkList->val);
     CSTListNode *workerNode = linkList->next;
     int counter = 1;
     while (workerNode) {
-        printf("第%d个首地址：%p，下一个:%p，值：%ld\n",counter++, workerNode, workerNode->next, workerNode->val);
+        if (pretty) {
+            printf("%ld -> ",workerNode->val);
+        } else {
+            printf("第%d个首地址：%p(NEXT:%p)，值：%ld\n\n",counter++, workerNode, workerNode->next, workerNode->val);
+        }
         workerNode = workerNode->next;
+    }
+    if (pretty) {
+        printf("NULL\n\n");
     }
 }
 
@@ -42,7 +53,13 @@ void reverseLinkList(CSTListNode *linkList)
 {
     CSTListNode *header = linkList;
     CSTListNode *tmpHeader = linkList->next; // 新的被反转的链表的头
+    if (!tmpHeader) {
+        return;
+    }
     CSTListNode *workNode = linkList->next->next;
+    if (!workNode) {
+        return;
+    }
     tmpHeader->next = NULL;
     
     while (workNode) {
@@ -52,4 +69,60 @@ void reverseLinkList(CSTListNode *linkList)
         tmpHeader = tmp;
     }
     header->next = tmpHeader;
+}
+
+void reverseLinkListBetween(CSTListNode *linkList, int from, int to)
+{
+    if (from >= to) {
+        return;
+    }
+    if (from <= 0) {
+        return;
+    }
+    int counter = 1;
+    CSTListNode *worker = linkList->next;
+    CSTListNode *firstTail = NULL; // 第一个链表的尾巴
+    CSTListNode *secondHeader = NULL;
+    CSTListNode *secondTail = NULL;
+    
+    while (worker) {
+        if (from <= counter && counter <= to) {
+            if (counter == from) {
+                secondHeader = worker;
+                worker = worker->next;
+                secondHeader->next = NULL;
+                secondTail = secondHeader;
+            } else {
+                CSTListNode *tmp = worker;
+                worker = worker->next;
+                tmp->next = secondHeader;
+                secondHeader = tmp;
+                if (to == counter || !worker) {
+                    // 将第一个链表和第二个链表链接起来
+                    if (firstTail) {
+                        firstTail->next = secondHeader;
+                    } else {
+                        linkList->next = secondHeader;
+                    }
+                    
+                    secondTail->next = worker;
+                }
+            }
+        } else {
+            if (counter < from) {
+                firstTail = worker;
+            }
+            
+            worker = worker->next;
+        }
+        counter ++;
+    }
+    printLinkList(linkList, YES);
+//    printLinkList(secondHeader, YES);
+//    printLinkList(thirdHeader, YES);
+    printf("搞定");
+    
+//    if (firstHeader && secondHeader && firstHeader != secondHeader) {
+//        firstHeader->next = secondHeader;
+//    }
 }
