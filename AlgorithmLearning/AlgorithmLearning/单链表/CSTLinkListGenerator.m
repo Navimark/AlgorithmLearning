@@ -159,3 +159,28 @@ void removeElementsInLinkList(CSTListNode *linkList,int val)
     
     printLinkList(newHead, YES, NO);
 }
+
+CSTListNode* deleteDuplicates(CSTListNode *linkList)
+{
+    CSTListNode *preNode = linkList->next;
+    CSTListNode *work = linkList->next;
+    while(work) {
+        work = work->next;
+        if(!work) {
+            break;
+        }
+        if(preNode->val == work->val) {
+            // 需要删除 work
+            preNode->next = work->next;
+            work = preNode;
+        } else {
+            preNode = work;
+        }
+    }
+    return linkList;
+}
+
+CSTListNode* deleteDuplicates2(CSTListNode *linkList)
+{
+    return NULL;
+}

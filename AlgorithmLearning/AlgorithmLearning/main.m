@@ -11,42 +11,44 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        CSTListNode *linkList = linkListWithRange(NSMakeRange(1, 10));
+        CSTListNode *linkList = linkListWithRange(NSMakeRange(1, 1));
         {
             CSTListNode *nineNode = malloc(sizeof(CSTListNode));
-            nineNode->val = 9;
+            nineNode->val = 1;
             nineNode->next = linkList->next;
             linkList->next = nineNode;
         }
         {
             CSTListNode *nineNode = malloc(sizeof(CSTListNode));
-            nineNode->val = 9;
+            nineNode->val = 1;
             nineNode->next = linkList->next;
             linkList->next = nineNode;
         }
-        {
-            CSTListNode *nineNode = malloc(sizeof(CSTListNode));
-            nineNode->val = 9;
-            nineNode->next = NULL;
-            CSTListNode *lastNode = linkList;
-            while (lastNode->next) {
-                lastNode = lastNode->next;
-            }
-            lastNode->next = nineNode;
-        }
-        {
-            CSTListNode *nineNode = malloc(sizeof(CSTListNode));
-            nineNode->val = 9;
-            nineNode->next = NULL;
-            CSTListNode *lastNode = linkList;
-            while (lastNode->next) {
-                lastNode = lastNode->next;
-            }
-            lastNode->next = nineNode;
-        }
+//        {
+//            CSTListNode *nineNode = malloc(sizeof(CSTListNode));
+//            nineNode->val = 9;
+//            nineNode->next = NULL;
+//            CSTListNode *lastNode = linkList;
+//            while (lastNode->next) {
+//                lastNode = lastNode->next;
+//            }
+//            lastNode->next = nineNode;
+//        }
+//        {
+//            CSTListNode *nineNode = malloc(sizeof(CSTListNode));
+//            nineNode->val = 9;
+//            nineNode->next = NULL;
+//            CSTListNode *lastNode = linkList;
+//            while (lastNode->next) {
+//                lastNode = lastNode->next;
+//            }
+//            lastNode->next = nineNode;
+//        }
         
-        printLinkList(linkList,YES,YES);
-        removeElementsInLinkList(linkList, 9);
+        printLinkList(linkList,NO,YES);
+        deleteDuplicates(linkList);
+        printLinkList(linkList,NO,YES);
+//        removeElementsInLinkList(linkList, 9);
 //        printLinkList(linkList,YES);
         /**
          1 中间一个 9 pass

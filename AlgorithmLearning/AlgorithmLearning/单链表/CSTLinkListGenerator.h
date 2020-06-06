@@ -31,4 +31,9 @@ void reverseLinkListBetween(CSTListNode *linkList,int from,int to);
 /// 删除链表中等于给定值 val 的所有节点
 void removeElementsInLinkList(CSTListNode *linkList,int val);
 
+/// 删除已排序链表的重复元素，如 1->1->2 处理完毕后变成 1->2
+CSTListNode* deleteDuplicates(CSTListNode *linkList);
+/// 删除已排序链表的重复元素，如 3->1->1->2 处理完毕后变成 3->2
+CSTListNode* deleteDuplicates2(CSTListNode *linkList);
+
 NS_ASSUME_NONNULL_END
