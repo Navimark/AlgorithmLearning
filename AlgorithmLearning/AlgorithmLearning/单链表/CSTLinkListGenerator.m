@@ -27,20 +27,27 @@ CSTListNode *linkListWithRange(NSRange range)
     return headNode;
 }
 
-void printLinkList(CSTListNode *linkList, BOOL pretty)
+void printLinkList(CSTListNode *linkList, BOOL pretty, BOOL withHeader)
 {
     if (!linkList) {
         printf("NULL <-> NULL ???\n");
         return;
     }
-    printf("linkList(%p)的长度:%ld \n",linkList, linkList->val);
-    CSTListNode *workerNode = linkList->next;
+    
+    CSTListNode *workerNode;
+    if (withHeader) {
+        printf("linkList(%p)的长度:%ld \n",linkList, linkList->val);
+        workerNode = linkList->next;
+    } else {
+        printf("无头结点的链表：\n");
+        workerNode = linkList;
+    }
     int counter = 1;
     while (workerNode) {
         if (pretty) {
             printf("%ld -> ",workerNode->val);
         } else {
-            printf("第%d个首地址：%p(NEXT:%p)，值：%ld\n\n",counter++, workerNode, workerNode->next, workerNode->val);
+            printf("第%d个首地址：%p(-> %p)，值：%ld\n\n",counter++, workerNode, workerNode->next, workerNode->val);
         }
         workerNode = workerNode->next;
     }
@@ -117,12 +124,38 @@ void reverseLinkListBetween(CSTListNode *linkList, int from, int to)
         }
         counter ++;
     }
-    printLinkList(linkList, YES);
-//    printLinkList(secondHeader, YES);
-//    printLinkList(thirdHeader, YES);
-    printf("搞定");
+    printLinkList(linkList, YES,YES);
+}
+
+void removeElementsInLinkList(CSTListNode *linkList,int val)
+{
+    CSTListNode *worker = linkList->next;
+    CSTListNode *newHead = linkList->next; // 将所有需要的节点都按顺序挂到 newHead 后面
+    CSTListNode *newLinkLast = NULL;
+    if (!worker) {
+        return;
+    }
+    while (worker) {
+        CSTListNode *tempNode = worker;
+        worker = worker->next;
+        if (tempNode->val == val) {
+            if (tempNode == newHead) {
+                newHead = worker;
+            }
+            printf("释放的:%ld\t",tempNode->val);
+            free(tempNode);
+        } else {
+            if (newHead != tempNode) {
+                newLinkLast->next = tempNode;
+                newLinkLast = tempNode;
+            } else {
+                newLinkLast = tempNode;
+            }
+        }
+        if (!worker && newLinkLast) {
+            newLinkLast->next = NULL;
+        }
+    }
     
-//    if (firstHeader && secondHeader && firstHeader != secondHeader) {
-//        firstHeader->next = secondHeader;
-//    }
+    printLinkList(newHead, YES, NO);
 }
